@@ -17,9 +17,7 @@ export class UserController {
 
         const user = request.body
 
-        if(!user.username || !user.password) {
-            return response.status(422).json({ message: "Invalid informations!" })
-        }
+        if(!user.username || !user.password) { return response.status(422).json({ message: "Invalid informations!" }) }
 
         await userService.createUser(user.username, user.password)
 
@@ -32,9 +30,7 @@ export class UserController {
         const user = request.body
         const userId = request.params.id
 
-        if(!user.username || !user.password || !userId) {
-            return response.status(422).json({ message: "Invalid informations!" })
-        }
+        if(!user.username || !user.password || !userId) { return response.status(422).json({ message: "Invalid informations!" }) }
 
         await userService.updateUser(userId, user.username, user.password)
 
@@ -46,9 +42,7 @@ export class UserController {
 
         const userId = request.params.id
 
-        if(!userId) {
-            return response.status(422).json({ message: "Invalid information!" })
-        }
+        if(!userId) { return response.status(422).json({ message: "Invalid information!" }) }
 
         await userService.deleteUser(userId)
 

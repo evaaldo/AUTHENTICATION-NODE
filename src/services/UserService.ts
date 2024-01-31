@@ -16,15 +16,7 @@ export class UserService {
 
         const user = new User({ userId, username, password })
 
-        try{
-
-            await user.save()
-
-        } catch(error) {
-
-            throw error
-
-        }
+        try{ await user.save() } catch(error) { throw error }
 
     }
 
