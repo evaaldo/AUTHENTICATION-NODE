@@ -15,13 +15,16 @@ const userService = new UserService_1.UserService();
 class UserController {
     getAllUsers(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
-            const users = userService.getAllUsers();
+            const users = yield userService.getAllUsers();
             return response.status(200).json(users);
         });
     }
     createUser(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
             const user = request.body;
+            if (!user.username || !user.password) {
+                return response.status(422).json({ message: "Invalid informations!" });
+            }
             yield userService.createUser(user.username, user.password);
             return response.status(200).json({ message: "User created!" });
         });
@@ -30,6 +33,9 @@ class UserController {
         return __awaiter(this, void 0, void 0, function* () {
             const user = request.body;
             const userId = request.params.id;
+            if (!user.username || !user.password || !userId) {
+                return response.status(422).json({ message: "Invalid informations!" });
+            }
             yield userService.updateUser(userId, user.username, user.password);
             return response.status(200).json({ message: "User updated!" });
         });
@@ -37,6 +43,9 @@ class UserController {
     deleteUser(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
             const userId = request.params.id;
+            if (!userId) {
+                return response.status(422).json({ message: "Invalid information!" });
+            }
             yield userService.deleteUser(userId);
             return response.status(200).json({ message: "User deleted!" });
         });
